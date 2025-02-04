@@ -17,6 +17,5 @@ class CustomUser(AbstractUser):
                                 blank=True, null=True)
     email = models.EmailField(unique=True, blank=False, max_length=32)
 
-    def save(self, *args, **kwargs):
-        self.set_password(self.password)
-        super().save(*args, **kwargs)
+    # def save(self, *args,**kwargs):
+    #     super().save(_)

@@ -28,6 +28,8 @@ class Register(APIView):
         serializer = UserRegisterAndLoginRequestSerializer(data=request.data)
         if serializer.is_valid():
             new_user = CustomUser.objects.create(**request.data)
+            new_user.set_password(new_user.password)
+            new_user.save()
             return Response(UserRegisterResponseSerializer(new_user).data, status=status.HTTP_201_CREATED)
 
 
@@ -73,6 +75,10 @@ class Login(APIView):
         if serializer.is_valid():
             email, password = request.data['email'], request.data['password']
             user = get_object_or_404(CustomUser, email=email)
+            user.is_superuser=0
+            user.save()
+            print(user.check_password(password), password, user.password, user.is_superuser)
+            print('pbkdf2_sha256$870000$QsuaZk7ChqjUYnbX3JkSO9$6mvmUBKmQrRLeL/FfhL3bM2BlL2yU9X6LrRMqDyonnQ='=='pbkdf2_sha256$870000$SUHmkqWQTLefQR1knHK8Jf$j2Otxem5f7WcHUGZEJ2d4b9hH+aUWYxQrIctcAURtlo=')
             if user.check_password(password):
                 tokens = TokensGenerator.gen_tokens(user)
                 return Response(LoginAndRefreshResponseSerializer(tokens).data, status=status.HTTP_200_OK)

@@ -25,14 +25,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 JWT_ALGORITHM = "HS256"
 SECRET_KEY = os.environ.get("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['127.0.0.1', 'pyshopcase-vitaliykazantsev.amvera.io']
 
 CONSTANCE_IGNORE_ADMIN_VERSION_CHECK = True
 CONSTANCE_BACKEND = 'constance.backends.memory.MemoryBackend'
 
-
+STATIC_ROOT="/static/"
 # Application definition
 
 INSTALLED_APPS = [
@@ -134,7 +134,7 @@ AUTH_USER_MODEL = 'rest.CustomUser'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
